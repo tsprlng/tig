@@ -67,6 +67,7 @@ struct ref;
 	_(MAIN_COMMIT,		""), \
 	_(MAIN_ANNOTATED,	""), \
 	_(MAIN_AUTOMATION,	""), \
+	_(AUTHOR_AUTOMATION,	""), \
 	_(MAIN_TAG,		""), \
 	_(MAIN_LOCAL_TAG,	""), \
 	_(MAIN_REMOTE,		""), \

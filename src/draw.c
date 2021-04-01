@@ -242,7 +242,7 @@ draw_date(struct view *view, struct view_column *column, const struct time *time
 }
 
 static bool
-draw_author(struct view *view, struct view_column *column, const struct ident *author)
+draw_author(struct view *view, enum line_type type, struct view_column *column, const struct ident *author)
 {
 	bool trim = author_trim(column->width);
 	const char *text = mkauthor(author, MAX(column->opt.author.width, column->opt.author.maxwidth),
@@ -251,7 +251,7 @@ draw_author(struct view *view, struct view_column *column, const struct ident *a
 	if (column->opt.author.display == AUTHOR_NO)
 		return false;
 
-	return draw_field(view, LINE_AUTHOR, text, column->width, ALIGN_LEFT, trim);
+	return draw_field(view, type, text, column->width, ALIGN_LEFT, trim);
 }
 
 static bool
@@ -485,7 +485,7 @@ view_column_draw(struct view *view, struct line *line, unsigned int lineno)
 			continue;
 
 		case VIEW_COLUMN_AUTHOR:
-			if (draw_author(view, column, column_data.author))
+			if (draw_author(view, line->type == LINE_MAIN_AUTOMATION ? LINE_AUTHOR_AUTOMATION : LINE_AUTHOR, column, column_data.author))
 				return true;
 			continue;
 
