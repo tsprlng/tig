@@ -519,8 +519,11 @@ view_column_draw(struct view *view, struct line *line, unsigned int lineno)
 			continue;
 
 		case VIEW_COLUMN_COMMIT_TITLE:
-			if (draw_commit_title(view, column, line->type == LINE_MAIN_ANNOTATED ? LINE_MAIN_ANNOTATED : LINE_MAIN_COMMIT,
-					      column_data.graph, column_data.graph_canvas, column_data.refs, column_data.commit_title))
+			if (draw_commit_title(view,
+					column,
+					line->type == LINE_MAIN_AUTOMATION ? LINE_MAIN_AUTOMATION :
+						line->type == LINE_MAIN_ANNOTATED ? LINE_MAIN_ANNOTATED : LINE_MAIN_COMMIT,
+					column_data.graph, column_data.graph_canvas, column_data.refs, column_data.commit_title))
 				return true;
 			continue;
 

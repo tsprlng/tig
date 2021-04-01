@@ -403,6 +403,12 @@ main_add_reflog(struct view *view, struct main_state *state, char *reflog)
 	return true;
 }
 
+bool
+is_ci_author(char *author)
+{
+	return author[0]=='[' && author[strlen(author)-1]==']';
+}
+
 /* Reads git log --pretty=raw output and parses it into the commit struct. */
 bool
 main_read(struct view *view, struct buffer *buf, bool force_stop)
@@ -468,7 +474,9 @@ main_read(struct view *view, struct buffer *buf, bool force_stop)
 			if (title) {
 				char *notes = io_memchr(buf, title, 0);
 
-				main_add_commit(view, notes && *notes ? LINE_MAIN_ANNOTATED : LINE_MAIN_COMMIT,
+				main_add_commit(view,
+						is_ci_author(author) ? LINE_MAIN_AUTOMATION :
+							notes && *notes ? LINE_MAIN_ANNOTATED : LINE_MAIN_COMMIT,
 						commit, title, false);
 			}
 		}
